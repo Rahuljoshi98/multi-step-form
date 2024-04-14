@@ -15,7 +15,7 @@
 
 .mainContent{
     height: 100%;
-    width: 85%;
+    width: 77%;
     padding: 4rem 0;
 }
 
@@ -68,4 +68,11 @@ textarea{
     padding-right: 6% !important;
 }
 
+.mainContentRight button{
+    background-color: #47a261;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 0;
+}
 

@@ -1,4 +1,4 @@
-
+let storeDataInLocalStorage = {};
 const formValidation = formSelector =>{
 
     const selectFormElement = document.querySelector(formSelector);
@@ -105,13 +105,27 @@ const formValidation = formSelector =>{
         if(e.target.matches("[prevPage]")){
             currentPage += increment;
             input=Array.from(formStep[currentPage].querySelectorAll('input'));
-            console.log(input)
             showCurrentPage();
         }
         else if(checkValidation(formStep[currentPage])){
+            const inputDataFields = Array.from(formStep[currentPage].querySelectorAll('input'));
+            const textAreaFields = Array.from(formStep[currentPage].querySelectorAll('textarea'));
+            const sectionFields = Array.from(formStep[currentPage].querySelectorAll('section'));
+            inputDataFields.forEach( (key)=>{
+                storeDataInLocalStorage[key.name] = key.value;
+            })
+
+            textAreaFields.forEach( (key)=>{
+                storeDataInLocalStorage[key.name] = key.value;
+            })
+
+            sectionFields.forEach( (key)=>{
+                storeDataInLocalStorage[key.name] = key.value;
+            })
+
+            localStorage.setItem('formData',JSON.stringify(storeDataInLocalStorage));
             currentPage += increment;
-            input=Array.from(formStep[currentPage].querySelectorAll('input'));
-            console.log(input)
+            // input=Array.from(formStep[currentPage].querySelectorAll('input'));
             showCurrentPage()
         }
     });
@@ -124,7 +138,7 @@ const formValidation = formSelector =>{
             if(!validateEachGroup(val)){
                 flag = false;
             };
-            console.log(val.type === 'select');
+            // console.log(val.type === 'select');
             if(val.type === 'select'){
                 type=true;
             }
@@ -149,6 +163,13 @@ const formValidation = formSelector =>{
 
 }
 formValidation('#registrationForm');
+
+
+
+
+
+
+
 
 
 // check validation using function
@@ -315,6 +336,85 @@ function removeGenderError(event){
     checkGender()
 }
 
+function addressCheck(addressVal){
+    if(addressVal.length === 0){
+        errorStyling('addressErrorContainer','addressdDangerIcon','addressdSuccessIcon','address',-1);
+        return true;
+    }
+    else{
+        errorStyling('addressErrorContainer','addressdDangerIcon','addressdSuccessIcon','address',1);
+        return false;
+    }
+}
+
+function checkPhone(phoneNo,key){
+    let error = document.getElementById("phoneNoErrorContainer")
+    const regexPhoneNo = /^[123456789][0-9]{9}$/;
+    let phoneInInt = phoneNo;
+    let inputField = document.getElementById("phoneno");
+    inputField.classList.add('border-2')
+    phoneNo = phoneNo.toString();
+    phoneNo = phoneNo.trimEnd();
+    if(phoneNo.length === 0){
+        errorStyling('phoneNoErrorContainer','phoneNoDangerIcon','phoneNoSuccessIcon','phoneno',0);
+        error.innerText = "** phone no can not be empty"
+        return false;
+    }
+    if(!regexPhoneNo.test(phoneInInt)){
+        errorStyling('phoneNoErrorContainer','phoneNoDangerIcon','phoneNoSuccessIcon','phoneno',-1);
+        error.innerText = "** invalid phone no"
+        return false;
+    }
+    if( !(key>=0 && key<=9) && key != 'Backspace' && key != 'ArrowDown' && key != 'ArrowRight' && key != 'ArrowUp' && key != 'ArrowLeft'){
+        errorStyling('phoneNoErrorContainer','phoneNoDangerIcon','phoneNoSuccessIcon','phoneno',-1);
+        error.innerText = "** phone no contains only digits";
+    }
+    else if(phoneNo.length >0 && phoneNo.length < 10){
+        errorStyling('phoneNoErrorContainer','phoneNoDangerIcon','phoneNoSuccessIcon','phoneno',-1);
+        return true;
+    }
+    
+    else{
+        error.innerHTML = "";
+        errorStyling('phoneNoErrorContainer','phoneNoDangerIcon','phoneNoSuccessIcon','phoneno',1);
+        return false;
+    }
+}
+
+function checkAadhar(aadhar,key){
+    let error = document.getElementById("aadharCardErrorContainer")
+    const regexAadhar = /^[0-9]{12}$/;
+    let aadharInt = aadhar;
+    let inputField = document.getElementById("aadharCardNo");
+    inputField.classList.add('border-2')
+    aadhar = aadhar.toString();
+    aadhar = aadhar.trimEnd();
+    if(aadhar.length === 0){
+        errorStyling('aadharCardErrorContainer','aadharCardDangerIcon','aadharCardSuccessIcon','aadharCardNo',0);
+        error.innerText = "** aadhar card no. can not be empty"
+        return false;
+    }
+    if(!regexAadhar.test(aadharInt)){
+        errorStyling('aadharCardErrorContainer','aadharCardDangerIcon','aadharCardSuccessIcon','aadharCardNo',-1);
+        error.innerText = "** invalid aadhar card no"
+        return false;
+    }
+    if( !(key>=0 && key<=9) && key != 'Backspace' && key != 'ArrowDown' && key != 'ArrowRight' && key != 'ArrowUp' && key != 'ArrowLeft'){
+        errorStyling('aadharCardErrorContainer','aadharCardDangerIcon','aadharCardSuccessIcon','aadharCardNo',-1);
+        error.innerText = "** aadhar card contains only digits";
+    }
+    else if(aadhar.length >0 && aadhar.length < 10){
+        errorStyling('aadharCardErrorContainer','aadharCardDangerIcon','aadharCardSuccessIcon','aadharCardNo',-1);
+        return true;
+    }
+    
+    else{
+        error.innerHTML = "";
+        errorStyling('aadharCardErrorContainer','aadharCardDangerIcon','aadharCardSuccessIcon','aadharCardNo',1);
+        return false;
+    }
+}
+
 
 function checkField(event,fieldName){
     let val = event.target.value;
@@ -331,9 +431,9 @@ function checkField(event,fieldName){
         let error = document.getElementById("passwordErrorContainer");
         error.innerText = "** your password should contain at least one uppercase, lowercase & special character";
     }
-    else if(fieldName == 'confirmPassword' && confirmPassword(val)){
+    // else if(fieldName == 'confirmPassword' && confirmPassword(val)){
         
-    }
+    // }
     else if(fieldName === "confirmPassword"){
         let userPass = document.getElementById("userPassword").value;
         if(confirmPassword(userPass,val)){
@@ -341,5 +441,16 @@ function checkField(event,fieldName){
             error.innerText = "** wrong password";
         }
     }
-    // else if(fieldName == 'gender' && )
+    else if(fieldName === 'address' && addressCheck(val)){
+        let error = document.getElementById("addressErrorContainer");
+        error.innerText = "** address can't be empty";
+    }
+    else if(fieldName == 'phoneNo' && checkPhone(val,key)){
+        let error = document.getElementById("phoneNoErrorContainer")
+        error.innerText = "** please enter 10 digit phone no.";
+    }
+    else if(fieldName == 'aadharCardNo' && checkAadhar(val,key)){
+        let error = document.getElementById("aadharCardErrorContainer")
+        error.innerText = "** please enter 12 digit aadhar card no.";
+    }
 }

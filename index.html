@@ -36,7 +36,7 @@
                     <div class="mb-3 inputFieldDiv">
                         <label for="fullName" class="form-label">Full Name</label>
                         <div class="d-flex align-items-center">
-                            <input type="text" class="form-control" id="fullName" required pattern="^[a-zA-Z\s.]{1,80}$" onkeyup="checkField(event,'fullName')">
+                            <input name="Full Name" type="text" class="form-control" id="fullName" required pattern="^[a-zA-Z\s.]{1,80}$" onkeyup="checkField(event,'fullName')">
                             <span class="errorDanger text-danger" id="userNameDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
@@ -50,7 +50,7 @@
                     <div class="mb-3 inputFieldDiv">
                         <label for="emailId" class="form-label">Email Id</label>
                         <div class="d-flex align-items-center">
-                            <input type="email" class="form-control" id="emailId" required pattern="^[0-9a-zA-Z._]{1,}@[a-zA-Z]{3,}[.]{1}[a-zA-Z.]{2,6}$" onkeyup="checkField(event,'emailId')">
+                            <input type="email" name="Email Id" class="form-control" id="emailId" required pattern="^[0-9a-zA-Z._]{1,}@[a-zA-Z]{3,}[.]{1}[a-zA-Z.]{2,6}$" onkeyup="checkField(event,'emailId')">
                             <span class="errorDanger text-danger" id="userEmailDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
@@ -64,7 +64,7 @@
                     <div class="mb-3 inputFieldDiv">
                         <label for="userPassword" class="form-label">Password</label>
                         <div class="d-flex align-items-center">
-                            <input type="password" class="form-control" id="userPassword" required customMinLength="8" onkeyup="checkField(event,'password')">
+                            <input type="password" name="Password" class="form-control" id="userPassword" required customMinLength="8" onkeyup="checkField(event,'password')">
                             <span class="errorDanger text-danger" id="userPasswordDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
@@ -78,7 +78,7 @@
                     <div class="mb-3 inputFieldDiv">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                         <div class="d-flex align-items-center">
-                            <input type="password" class="form-control" id="confirmPassword" required match="userPassword" onkeyup="checkField(event,'confirmPassword')">
+                            <input type="password" name="Confirm Password" class="form-control" id="confirmPassword" required match="userPassword" onkeyup="checkField(event,'confirmPassword')">
                             <span class="errorDanger text-danger" id="confirmPasswordDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
@@ -101,7 +101,7 @@
                     <div class="mb-3 inputFieldDiv">
                         <label for="gender" class="form-label">Gender</label>
                         <div class="d-flex align-items-center">
-                            <select name="" id="gender" class="form-select" required onclick="removeGenderError(event)">
+                            <select name="Gender" id="gender" class="form-select" required onclick="removeGenderError(event)">
                                 <option selected value="">Select your gender</option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -120,44 +120,44 @@
                     <div class="mb-3 inputFieldDiv">
                         <label for="address" class="form-label">Address</label>
                         <div class="d-flex align-items-center">
-                            <textarea name="" id="address" rows="3" class=" form-control" style="resize: none;" required></textarea>
+                            <textarea name="Address" id="address" rows="3" class=" form-control" style="resize: none;" required  onkeyup="checkField(event,'address')"></textarea>
 
-                            <span class="errorDanger text-danger">
+                            <span class="errorDanger text-danger" id="addressdDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
-                            <span class="errorSuccess text-success">
+                            <span class="errorSuccess text-success" id="addressdSuccessIcon">
                                 <i class="fa-solid fa-circle-check"></i>
                             </span>
                         </div>
-                        <div class="errorMessage text-danger"></div>
+                        <div class="errorMessage text-danger" id="addressErrorContainer"></div>
                     </div>
 
                     <div class="mb-3 inputFieldDiv">
                         <label for="phoneno" class="form-label">Phone No.</label>
                         <div class="d-flex align-items-center">
-                            <input type="text" class="form-control" id="phoneno" required exactLength="10" maxlength="10">
-                            <span class="errorDanger text-danger">
+                            <input name="Phone No." type="text" class="form-control" id="phoneno" required exactLength="10" maxlength="10" onkeyup="checkField(event,'phoneNo')" pattern="^[0-9]{10}$">
+                            <span class="errorDanger text-danger" id="phoneNoDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
-                            <span class="errorSuccess text-success">
+                            <span class="errorSuccess text-success" id="phoneNoSuccessIcon">
                                 <i class="fa-solid fa-circle-check"></i>
                             </span>
                         </div>
-                        <div class="errorMessage text-danger"></div>
+                        <div class="errorMessage text-danger" id="phoneNoErrorContainer"></div>
                     </div>
 
                     <div class="mb-3 inputFieldDiv">
                         <label for="aadharCardNo" class="form-label">Aadhar Card No.</label>
                         <div class="d-flex align-items-center">
-                            <input type="text" class="form-control" id="aadharCardNo" placeholder="enter your 12 digit aadhar card no." required>
-                            <span class="errorDanger text-danger">
+                            <input name="Aadhar Card No." type="text" class="form-control" id="aadharCardNo" placeholder="enter your 12 digit aadhar card no." required pattern="^[0-9]{12}$" onkeyup="checkField(event,'aadharCardNo')" maxlength="12">
+                            <span class="errorDanger text-danger" id="aadharCardDangerIcon">
                                 <i class="fa-solid fa-circle-exclamation"></i>
                             </span>
-                            <span class="errorSuccess text-success">
+                            <span class="errorSuccess text-success" id="aadharCardSuccessIcon">
                                 <i class="fa-solid fa-circle-check"></i>
                             </span>
                         </div>
-                        <div class="errorMessage text-danger"></div>
+                        <div class="errorMessage text-danger" id="aadharCardErrorContainer"></div>
                     </div>
 
                     <div class="d-flex justify-content-end inputFieldDiv gap-4">
