@@ -174,8 +174,9 @@ const formValidation = formSelector =>{
         const myForm = document.getElementById("registrationForm");
         document.getElementById("spin").style.display = "block"
         setTimeout(function(){
-            document.getElementById("spin").style.display = "none"
             myForm.reset();
+            document.getElementById("spin").style.display = "none"
+            currentPage=0;
             window.location.href = "display.html";
         },1500);
         }
@@ -235,6 +236,9 @@ const formValidation = formSelector =>{
 
 }
 formValidation('#registrationForm');
+
+
+
 
 
 
