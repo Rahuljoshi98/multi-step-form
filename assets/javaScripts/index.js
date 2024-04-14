@@ -132,6 +132,7 @@ const formValidation = formSelector =>{
 
     const checkValidation = pageToValidate =>{
         const formGroups = Array.from(pageToValidate.querySelectorAll('.inputFieldDiv'))
+        console.log(formGroups)
         let flag = true;
         let type = false;
         formGroups.forEach(val=>{
@@ -139,16 +140,24 @@ const formValidation = formSelector =>{
                 flag = false;
             };
             // console.log(val.type === 'select');
+            // console.log(val)
             if(val.type === 'select'){
+                console.log("in")
                 type=true;
             }
         })
-
-
-        
+        // console.log(type)
         if(type && !checkGender()){
             flag = false;
         }
+
+        // if(type && !checkMaritalStatus()){
+        //     flag = false;
+        // }
+
+        // if(type && !checkJobProfile()){
+        //     flag = false;
+        // }
         return flag;
     }
 
@@ -327,6 +336,41 @@ function checkGender(){
     }
 }
 
+
+// function checkMaritalStatus(){
+//     let userMaritalStat = document.getElementById("maritalStat").value;
+//     let inputField = document.getElementById("maritalStat");
+//     inputField.classList.add('border-2')
+//     let error = document.getElementById("maritalStatErrorContainer");
+//     if(userMaritalStat == ''){
+//         error.innerText = "** marital status is required";
+//         inputField.classList.add("border-danger");
+//         inputField.classList.remove("border-success");
+//     }
+//     else{
+//         error.innerText = "";
+//         inputField.classList.remove("border-danger");
+//         inputField.classList.add("border-success");
+//     }
+// }
+
+// function checkJobProfile(){
+//     let userJobProfile = document.getElementById("jobProfile").value;
+//     let inputField = document.getElementById("jobProfile");
+//     inputField.classList.add('border-2')
+//     let error = document.getElementById("jobProfileErrorContainer");
+//     if(userJobProfile == ''){
+//         error.innerText = "** job profile is required";
+//         inputField.classList.add("border-danger");
+//         inputField.classList.remove("border-success");
+//     }
+//     else{
+//         error.innerText = "";
+//         inputField.classList.remove("border-danger");
+//         inputField.classList.add("border-success");
+//     }
+// }
+
 function removeGenderError(event){
     let error = document.getElementById("genderErrorContainer");
     let inputField = document.getElementById("gender");
@@ -335,6 +379,25 @@ function removeGenderError(event){
     inputField.classList.add("border-success");
     checkGender()
 }
+
+// function removeMaritalError(event){
+//     let error = document.getElementById("maritalStatErrorContainer");
+//     let inputField = document.getElementById("maritalStat");
+//     error.innerText = "";
+//     inputField.classList.remove("border-danger");
+//     inputField.classList.add("border-success");
+//     checkMaritalStatus();
+// }
+
+
+// function jobProfileError(event){
+//     let error = document.getElementById("jobProfileErrorContainer");
+//     let inputField = document.getElementById("jobProfile");
+//     error.innerText = "";
+//     inputField.classList.remove("border-danger");
+//     inputField.classList.add("border-success");
+//     checkJobProfile();
+// }
 
 function addressCheck(addressVal){
     if(addressVal.length === 0){

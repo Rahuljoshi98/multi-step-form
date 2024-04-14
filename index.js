@@ -131,12 +131,13 @@ const formValidation = formSelector =>{
 
     selectFormElement.addEventListener('submit',function(e){
         e.preventDefault();
-        currentPage = 2;
-        console.log(currentPage);
-        const inputDataFields = Array.from(formStep[currentPage].querySelectorAll('input'));
-        const textAreaFields = Array.from(formStep[currentPage].querySelectorAll('textarea'));
-        const sectionFields = Array.from(formStep[currentPage].querySelectorAll('select'));
-        inputDataFields.forEach( (key)=>{
+        currentPage=2;
+        if(checkValidation(formStep[currentPage])){
+            currentPage = 2;
+            const inputDataFields = Array.from(formStep[currentPage].querySelectorAll('input'));
+            const textAreaFields = Array.from(formStep[currentPage].querySelectorAll('textarea'));
+            const sectionFields = Array.from(formStep[currentPage].querySelectorAll('select'));
+            inputDataFields.forEach( (key)=>{
             storeDataInLocalStorage[key.name] = key.value;
         })
 
@@ -148,27 +149,47 @@ const formValidation = formSelector =>{
             storeDataInLocalStorage[key.name] = key.value;
         })
 
+        delete storeDataInLocalStorage["Password"];
+        delete storeDataInLocalStorage["Confirm Password"];
+        let maskedPhoneNo = storeDataInLocalStorage["Phone No."];
+        let maskedAadharNo = storeDataInLocalStorage["Aadhar Card No."];
+
+        let size1 = maskedPhoneNo.length-4;
+        let size2 = maskedAadharNo.length-4;
+        let startString1 = "";
+        let startString2 = "";
+        for(let i=0;i<size1;i++){
+            startString1 += "*";
+        }
+        for(let i=0;i<size2;i++){
+            startString2 += "*";
+        }
+        maskedPhoneNo = startString1+maskedPhoneNo.slice(size1);
+        maskedAadharNo = startString2+maskedAadharNo.slice(size2)
+
+        storeDataInLocalStorage["Phone No."] = maskedPhoneNo;
+        storeDataInLocalStorage["Aadhar Card No."] = maskedAadharNo;
+
         localStorage.setItem('formData',JSON.stringify(storeDataInLocalStorage));
         const myForm = document.getElementById("registrationForm");
+        document.getElementById("spin").style.display = "block"
         setTimeout(function(){
+            document.getElementById("spin").style.display = "none"
             myForm.reset();
             window.location.href = "display.html";
-        },1000);
+        },1500);
+        }
+
     })
 
     const checkValidation = pageToValidate =>{
         const formGroups = Array.from(pageToValidate.querySelectorAll('.inputFieldDiv'))
-        // console.log(formGroups)
         let flag = true;
-        // let type = false;
+
         formGroups.forEach(val=>{
             if(!validateEachGroup(val)){
                 flag = false;
             };
-            // if(val.type === 'select'){
-            //     console.log("in")
-            //     type=true;
-            // }
         })
 
 
@@ -204,8 +225,6 @@ const formValidation = formSelector =>{
         }
         return flag;
     }
-
-
 
     function showCurrentPage(){
         formStep.forEach( (step,index)=>{
@@ -575,5 +594,31 @@ function checkField(event,fieldName){
     else if(fieldName == 'additionalNotes' && checkAdditionalNotes(val)){
         let error = document.getElementById("additionalNotesErrorContainer");
         error.innerText = "** field can't be empty";
+    }
+}
+
+function displayPassword(event,passwordType){
+    event.preventDefault();
+    let fieldOne = document.getElementById("userPassword");
+    let fieldTwo = document.getElementById("confirmPassword")
+    let userPassType = fieldOne.type;
+    let confirmPassType = fieldTwo.type;
+    
+    if(passwordType == "userPassword"){
+        if(userPassType == "password"){
+            fieldOne.type = "text";
+        }
+        else{
+            fieldOne.type = "password";
+        }
+    }
+    
+    else{
+        if(confirmPassType == "password"){
+            fieldTwo.type = "text";
+        }
+        else{
+            fieldTwo.type = "password";
+        }
     }
 }
